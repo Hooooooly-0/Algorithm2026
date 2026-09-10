@@ -2,4 +2,4 @@
 ### Homework1
 
 [SelectionSorting](./homework/SelectionSorting.pde)
-![Alt homework11](./homework/homework1.jpg)
+![Alt homework11](./homework/homewor1.jpg)
