@@ -22,17 +22,13 @@ void arrPrint(int arr[]) {
  }
 }
 void insertionSort(int arr[]) {
-  int i, j, index, tmp;
+  int i, j, tmp;
  for(i=0; i<arr.length-1; i++) {
-   tmp = index = -1;
    tmp = arr[i+1];
-  for(j=i; j>=0; j--) {
-    if(arr[j]>arr[i+1]) {
-      index = j;
-      arr[j+1] = arr[j];
-    }
-  }
-  arr[index] = tmp;
+   for(j=i; j>= 0 && arr[j]>tmp; j--){
+     arr[j+1] = arr[j];
+   }
+   arr[j+1] = tmp;
  }
 }
 
