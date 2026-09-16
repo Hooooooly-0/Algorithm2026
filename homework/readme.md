@@ -1,7 +1,7 @@
 # Algorithm2026
 ### Homework1
 
-[SelectionSorting](./homework/selectionSorting.pde)
+[SelectionSorting](./selectionSorting.pde)
 ![Alt homework1](./homework/homewor1.jpg)
 
 
