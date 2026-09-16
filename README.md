@@ -8,5 +8,5 @@
 [BubbleSorting](./homework/bubbleSorting.pde)
 ![Alt homework1](./homework/bubbleSorting.jpg)
 
-[BubbleSorting](./homework/insertionSort.pde)
+[InsertionSorting](./homework/insertionSort.pde)
 ![Alt homework1](./homework/insertionSort.jpg)
