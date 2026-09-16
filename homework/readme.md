@@ -1,10 +1,18 @@
-readme
-
-<img width="959" height="1017" alt="homewor1" src="https://github.com/user-attachments/assets/1f8ad641-85af-4abb-b928-4483982ec3d2" />
-
-
 # Algorithm2026
 ### Homework1
 
-[SelectionSorting](./homework/SelectionSorting)
-![Alt homework1](./homework/homework1.jpg)
+[SelectionSorting](./homework/selectionSorting.pde)
+![Alt homework1](./homework/homewor1.jpg)
+
+
+[BubbleSorting](./homework/bubbleSorting.pde)
+![Alt homework1](./homework/bubbleSorting.jpg)
+
+[InsertionSorting](./homework/insertionSort.pde)
+![Alt homework1](./homework/insertionSort.jpg)
+
+[MergeSorting](./homework/mergeSort.pde)
+![Alt homework1](./homework/mergeSort.jpg)
+
+[QuickSorting](./homework/quickSort.pde)
+![Alt homework1](./homework/quickSort.jpg)
