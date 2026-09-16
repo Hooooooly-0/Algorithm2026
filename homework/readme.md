@@ -7,4 +7,4 @@ readme
 ### Homework1
 
 [SelectionSorting](./homework/SelectionSorting)
-![Alt homework11](./homework/homework1.jpg)
+![Alt homework1](./homework/homework1.jpg)
