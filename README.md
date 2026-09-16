@@ -10,3 +10,6 @@
 
 [InsertionSorting](./homework/insertionSort.pde)
 ![Alt homework1](./homework/insertionSort.jpg)
+
+[MergeSorting](./homework/mergeSort.pde)
+![Alt homework1](./homework/mergeSort.jpg)
