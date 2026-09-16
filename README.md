@@ -13,3 +13,6 @@
 
 [MergeSorting](./homework/mergeSort.pde)
 ![Alt homework1](./homework/mergeSort.jpg)
+
+[QuickSorting](./homework/quickSort.pde)
+![Alt homework1](./homework/quickSort.jpg)
