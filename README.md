@@ -16,3 +16,6 @@
 
 [QuickSorting](./homework/quickSort.pde)
 ![Alt homework1](./homework/quickSort.jpg)
+
+[HeapSorting](./homework/heapSort.pde)
+![Alt homework1](./homework/heapSort.jpg)
