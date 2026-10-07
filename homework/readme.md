@@ -1,21 +1,21 @@
 # Algorithm2026
-### Homework1
+### Homework2
 
-[SelectionSorting](./selectionSorting.pde)
-![Alt homework1](./homewor1.jpg)
+[SelectionSortingDraw](./homework/selectionSortDraw.pde)
+![Alt homework2](./homework/selectionSortDraw.gif)
 
 
-[BubbleSorting](./bubbleSorting.pde)
-![Alt homework1](./bubbleSorting.jpg)
+[BubbleSortingDraw](./homework/bubbleSortDraw.pde)
+![Alt homework2](./homework/bubbleSortDraw.gif)
 
-[InsertionSorting](./insertionSort.pde)
-![Alt homework1](./insertionSort.jpg)
+[InsertionSortingDraw](./homework/insertionSortDraw.pde)
+![Alt homework2](./homework/insertionSortDraw.gif)
 
-[MergeSorting](./mergeSort.pde)
-![Alt homework1](./mergeSort.jpg)
+[MergeSortingDraw](./homework/mergeSortDraw.pde)
+![Alt homework2](./homework/mergeSortDraw.gif)
 
-[QuickSorting](./quickSort.pde)
-![Alt homework1](./quickSort.jpg)
+[QuickSortingDraw](./homework/quickSortDraw.pde)
+![Alt homework2](./homework/quickSortDraw.gif)
 
-[HeapSorting](./heapSort.pde)
-![Alt homework1](./heapSort.jpg)
+[HeapSortingDraw](./homework/heapSortDraw.pde)
+![Alt homework2](./homework/heapSortDraw.gif)
