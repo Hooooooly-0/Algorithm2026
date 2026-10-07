@@ -12,7 +12,7 @@
 ![Alt homework2](./homework/insertionSortDraw.gif)
 
 [MergeSortingDraw](./homework/mergeSortDraw.pde)
-![Alt homework2](./homework/mergeSort.gif)
+![Alt homework2](./homework/mergeSortDraw.gif)
 
 [QuickSortingDraw](./homework/quickSortDraw.pde)
 ![Alt homework2](./homework/quickSortDraw.gif)
