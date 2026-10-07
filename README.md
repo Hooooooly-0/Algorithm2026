@@ -1,23 +1,23 @@
 # Algorithm2026
 ### Homework1
 
-[SelectionSorting](./homework/selectionSortDraw.pde)
-![Alt homework1](./homework/selectionSortDraw.gif)
+[SelectionSortingDraw](./homework/selectionSortDraw.pde)
+![Alt homework2](./homework/selectionSortDraw.gif)
 
 
-[BubbleSorting](./homework/bubbleSorting.pde)
-![Alt homework1](./homework/bubbleSorting.jpg)
+[BubbleSortingDraw](./homework/bubbleSortDraw.pde)
+![Alt homework2](./homework/bubbleSortDraw.gif)
 
-[InsertionSorting](./homework/insertionSort.pde)
-![Alt homework1](./homework/insertionSort.jpg)
+[InsertionSortingDraw](./homework/insertionSortDraw.pde)
+![Alt homework2](./homework/insertionSortDraw.gif)
 
-[MergeSorting](./homework/mergeSort.pde)
-![Alt homework1](./homework/mergeSort.jpg)
+[MergeSortingDraw](./homework/mergeSortDraw.pde)
+![Alt homework2](./homework/mergeSort.gif)
 
-[QuickSorting](./homework/quickSort.pde)
-![Alt homework1](./homework/quickSort.jpg)
+[QuickSortingDraw](./homework/quickSortDraw.pde)
+![Alt homework2](./homework/quickSortDraw.gif)
 
 [HeapSorting](./homework/heapSort.pde)
-![Alt homework1](./homework/heapSort.jpg)
+![Alt homework2](./homework/heapSort.jpg)
 
 <video src="https://github.com/user-attachments/assets/76aded6c-b015-446f-bde1-a55688952365" width="100%" controls></video>
