@@ -1,8 +1,8 @@
 # Algorithm2026
 ### Homework1
 
-[SelectionSorting](./homework/selectionSorting.pde)
-![Alt homework1](./homework/homewor1.jpg)
+[SelectionSorting](./homework/selectionSortDraw.pde)
+![Alt homework1](./homework/selectionSortDraw.gif)
 
 
 [BubbleSorting](./homework/bubbleSorting.pde)
