@@ -20,4 +20,4 @@
 [HeapSorting](./homework/heapSort.pde)
 ![Alt homework1](./homework/heapSort.jpg)
 
-<video src="https://github.com/user-attachments/assets/76aded6c-b015-446f-bde1-a55688952365" autoplay loop muted playsinline width="100%"><video>
+<video src="https://github.com/user-attachments/assets/76aded6c-b015-446f-bde1-a55688952365" autoplay loop muted playsinline width="100%"></video>
