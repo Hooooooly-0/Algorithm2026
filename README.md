@@ -1,5 +1,5 @@
 # Algorithm2026
-### Homework1
+### Homework2
 
 [SelectionSortingDraw](./homework/selectionSortDraw.pde)
 ![Alt homework2](./homework/selectionSortDraw.gif)
