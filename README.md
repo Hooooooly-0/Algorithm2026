@@ -17,5 +17,4 @@
 [QuickSortingDraw](./homework/quickSortDraw.pde)
 ![Alt homework2](./homework/quickSortDraw.gif)
 
-[HeapSortingDraw](./homework/heapSortDraw.pde)
-![Alt homework2](./homework/heapSortDraw.gif)
+
