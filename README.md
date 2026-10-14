@@ -1,8 +1,8 @@
 # Algorithm2026
 ### Homework2
 
-[SelectionSortingDraw](./homework/selectionSortDraw.pde)
-![Alt homework2](./homework/selectionSortDraw.gif)
+[BinarySearchTree](./homework/BinarySearchTree/BinarySearchTree.pde)
+![Alt homework3](./homework/BinarySearchTree.gif)
 
 
 [BubbleSortingDraw](./homework/bubbleSortDraw.pde)
