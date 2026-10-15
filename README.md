@@ -1,7 +1,7 @@
 # Algorithm2026
 ### Homework2
 [SelecitonSort](./homework/selectionSort.pde)
-![Alt homework1](./homework/selecitonSort.gif)
+![Alt homework1](./homework/selecitonSort.png)
 
 ### Homework2
 
