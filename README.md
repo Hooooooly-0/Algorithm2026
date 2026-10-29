@@ -44,4 +44,4 @@
 
 
 [infixToPostfixCalculatorUsingStack](homework/infixToPostfixCalculatorUsingStack.pde)
-![Alt homework4](homework/infixToPostfixCalculatorUsingStack.jpg)
+![Alt homework4](homework/infixToPostfixCalculatorUsingStack.gif)
