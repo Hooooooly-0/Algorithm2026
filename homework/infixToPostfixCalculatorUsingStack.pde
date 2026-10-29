@@ -3,65 +3,163 @@ import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
 
-String infixExpr = "3 + 5 * ( 2 - 8 ) / 4"; // 기본 예시 수식
-String postfixExpr = "";
-float result = 0;
+// 단계별 정보를 저장하는 클래스
+class StepInfo {
+  String token;
+  List<String> stackSnapshot;
+  List<String> outputSnapshot;
+  String actionDesc;
+  
+  StepInfo(String token, List<String> stack, List<String> output, String desc) {
+    this.token = token;
+    this.stackSnapshot = new ArrayList<>(stack);
+    this.outputSnapshot = new ArrayList<>(output);
+    this.actionDesc = desc;
+  }
+}
+
+String infixExpr = "3 + 5 * ( 2 - 8 ) / 4";
+List<StepInfo> steps = new ArrayList<>();
+int currentStepIndex = 0;
+float finalResult = 0;
 boolean hasError = false;
 String errorMessage = "";
 
+PFont koreanFont;
+
 void setup() {
-  size(850, 520);
-  surface.setTitle("Infix to Postfix Calculator & Evaluator");
+  size(900, 650);
+  surface.setTitle("Infix to Postfix Step-by-Step Stack Visualizer");
   
-  // 최초 실행 시 입력창 띄우기
+  koreanFont = createFont("Malgun Gothic", 16);
+  textFont(koreanFont);
+  
   processExpression(infixExpr);
 }
 
 void draw() {
-  background(25, 25, 35);
+  background(20, 20, 30);
+  textFont(koreanFont);
   
-  // 타이틀
+  // 1. 타이틀 및 안내
   fill(255);
-  textSize(24);
+  textSize(22);
   textAlign(CENTER, TOP);
-  text("Processing Stack Infix to Postfix Calculator", width / 2, 30);
+  text("Stack Visualizer: Infix to Postfix Conversion", width / 2, 20);
   
-  // 안내 문구
-  textSize(15);
-  fill(180, 200, 220);
-  text("Press 'ENTER' or 'I' key to enter a new expression", width / 2, 75);
+  textSize(14);
+  fill(160, 180, 200);
+  text("[RIGHT / SPACE]: 다음 단계   |   [LEFT]: 이전 단계   |   [ENTER / I]: 새로운 수식 입력", width / 2, 52);
   
-  // 1. 중위 표기법 박스
-  drawBox(50, 120, width - 100, 75, "1. Infix Expression (사용자 입력 수식):", infixExpr, color(50, 120, 200));
+  // 2. 현재 입력된 중위 수식 표시
+  drawInfoBox(40, 90, width - 80, 50, "입력된 중위 수식 (Infix):", infixExpr, color(70, 130, 200));
   
-  // 2. 후위 표기법 박스
-  drawBox(50, 215, width - 100, 75, "2. Postfix Expression (후위 표기법 변환 결과):", postfixExpr, color(50, 180, 120));
+  // 현재 단계 정보 가져오기
+  if (steps.isEmpty()) return;
+  StepInfo current = steps.get(currentStepIndex);
   
-  // 3. 연산 결과 또는 에러 박스
-  if (hasError) {
-    drawBox(50, 310, width - 100, 85, "Evaluation Error (오류 발생):", errorMessage, color(220, 60, 60));
-  } else {
-    drawBox(50, 310, width - 100, 85, "3. Final Result (최종 계산 결과):", nf(result, 0, 4), color(140, 90, 220));
+  // 3. 메인 시각화 영역 (좌: 스택 상태 / 우: 출력(Postfix) 및 설명)
+  float midY = 160;
+  float contentH = 340;
+  
+  // -- [좌측] 스택 시각화 박스 --
+  float stackX = 40;
+  float stackW = 320;
+  drawPanel(stackX, midY, stackW, contentH, "스택 상태 (Stack - 바닥에서 꼭대기 순)");
+  
+  List<String> stk = current.stackSnapshot;
+  float boxH = 40;
+  float startY = midY + contentH - 60;
+  for (int i = 0; i < stk.size(); i++) {
+    float y = startY - (i * (boxH + 8));
+    fill(90, 70, 180);
+    stroke(140, 120, 240);
+    strokeWeight(2);
+    rect(stackX + 30, y, stackW - 60, boxH, 6);
+    
+    fill(255);
+    textSize(18);
+    textAlign(CENTER, CENTER);
+    text(stk.get(i), stackX + stackW / 2, y + boxH / 2);
+  }
+  if (stk.isEmpty()) {
+    fill(120);
+    textSize(15);
+    textAlign(CENTER, CENTER);
+    text("(스택이 비어 있음)", stackX + stackW / 2, midY + contentH / 2);
   }
   
-  // 하단 도움말
-  textSize(13);
-  fill(130);
-  textAlign(CENTER, BOTTOM);
-  text("Supported: +, -, *, /, (), Multi-digit numbers. (예: 10 + 2 * (6 - 4))", width / 2, height - 20);
+  // -- [우측] 현재 토큰, 출력 결과, 설명 박스 --
+  float rightX = 380;
+  float rightW = width - 420;
+  drawPanel(rightX, midY, rightW, contentH, "시뮬레이션 진행 상황 및 출력");
+  
+  fill(200, 220, 255);
+  textSize(15);
+  textAlign(LEFT, TOP);
+  text("현재 읽은 토큰 (Current Token):", rightX + 30, midY + 45);
+  
+  fill(255, 200, 80);
+  textSize(22);
+  text(current.token.isEmpty() ? "(시작 대기)" : current.token, rightX + 260, midY + 40);
+  
+  fill(200, 220, 255);
+  textSize(15);
+  text("동작 설명 (Action Description):", rightX + 30, midY + 95);
+  
+  // [수정됨] 텍스트가 박스를 넘어가지 않도록 너비와 높이를 지정하여 자동 줄 바꿈 적용
+  fill(240);
+  textSize(14);
+  text(current.actionDesc, rightX + 30, midY + 125, rightW - 60, 60);
+  
+  // 후위 표기법 진행 상황
+  fill(200, 220, 255);
+  textSize(15);
+  text("후위 표기법 변환 결과 (Postfix Output):", rightX + 30, midY + 205);
+  
+  fill(80, 220, 150);
+  textSize(18);
+  text(String.join(" ", current.outputSnapshot), rightX + 30, midY + 235);
+  
+  // 4. 하단 상태바 (진행 단계 표시)
+  fill(40, 40, 55);
+  noStroke();
+  rect(40, 520, width - 80, 50, 8);
+  
+  fill(255);
+  textSize(16);
+  textAlign(CENTER, CENTER);
+  text("진행 단계: " + (currentStepIndex + 1) + " / " + steps.size() + 
+       (currentStepIndex == steps.size() - 1 ? " [변환 완료]" : ""), width / 2, 545);
+       
+  // 최종 계산 결과 (모든 단계가 끝났을 때만)
+  if (currentStepIndex == steps.size() - 1 && !hasError) {
+    textSize(14);
+    fill(180, 140, 255);
+    textAlign(RIGHT, CENTER);
+    text("계산 결과: " + nf(finalResult, 0, 4), width - 70, 545);
+  }
 }
 
-// 키 입력 이벤트: Enter나 i를 누르면 입력창 호출
+// 키 입력 처리
 void keyPressed() {
-  if (keyCode == ENTER || key == 'i' || key == 'I') {
+  if (keyCode == RIGHT || key == ' ') {
+    if (currentStepIndex < steps.size() - 1) {
+      currentStepIndex++;
+    }
+  } else if (keyCode == LEFT) {
+    if (currentStepIndex > 0) {
+      currentStepIndex--;
+    }
+  } else if (keyCode == ENTER || key == 'i' || key == 'I') {
     requestInput();
   }
 }
 
-// 사용자 입력을 받아 수식 처리
+// 사용자 입력 처리
 void requestInput() {
   String input = JOptionPane.showInputDialog(null, 
-    "수식을 입력하세요 (예: 3 + 5 * ( 2 - 8 ) / 4):", 
+    "새로운 중위 표기법 수식을 입력하세요:", 
     "Infix Calculator Input", 
     JOptionPane.QUESTION_MESSAGE);
     
@@ -71,49 +169,110 @@ void requestInput() {
   }
 }
 
-// 수식 변환 및 계산 실행 함수
+// 수식 분석 및 단계별 스냅샷 생성
 void processExpression(String infix) {
   hasError = false;
-  errorMessage = "";
+  steps.clear();
+  currentStepIndex = 0;
+  
   try {
-    postfixExpr = infixToPostfix(infix);
-    result = evaluatePostfix(postfixExpr);
+    List<String> tokens = tokenize(infix);
+    Stack<String> stack = new Stack<>();
+    List<String> output = new ArrayList<>();
+    
+    steps.add(new StepInfo("-", stack, output, "변환 대기 중 (우측 화살표 [>] 키를 눌러 시작하세요)"));
+    
+    for (String token : tokens) {
+      char c = token.charAt(0);
+      
+      if (Character.isDigit(c) || (token.length() > 1 && Character.isDigit(token.charAt(1)))) {
+        output.add(token);
+        steps.add(new StepInfo(token, stack, output, "숫자이므로 출력(Postfix) 리스트에 추가합니다."));
+      } 
+      else if (c == '(') {
+        stack.push(token);
+        steps.add(new StepInfo(token, stack, output, "여는 괄호 '(' 이므로 스택에 푸시합니다."));
+      } 
+      else if (c == ')') {
+        while (!stack.isEmpty() && !stack.peek().equals("(")) {
+          output.add(stack.pop());
+        }
+        if (!stack.isEmpty() && stack.peek().equals("(")) {
+          stack.pop();
+          steps.add(new StepInfo(token, stack, output, "닫는 괄호 ')'를 만나 '('가 나올 때까지 팝하여 출력에 추가합니다."));
+        } else {
+          throw new IllegalArgumentException("괄호 짝이 맞지 않습니다.");
+        }
+      } 
+      else if (isOperator(c)) {
+        while (!stack.isEmpty() && precedence(stack.peek().charAt(0)) >= precedence(c)) {
+          output.add(stack.pop());
+        }
+        stack.push(token);
+        steps.add(new StepInfo(token, stack, output, "연산자 '" + token + "'보다 우선순위가 높거나 같은 스택의 연산자들을 팝한 후 푸시합니다."));
+      } else {
+        throw new IllegalArgumentException("유효하지 않은 토큰: " + token);
+      }
+    }
+    
+    while (!stack.isEmpty()) {
+      if (stack.peek().equals("(")) {
+        throw new IllegalArgumentException("괄호 짝이 맞지 않습니다.");
+      }
+      output.add(stack.pop());
+      steps.add(new StepInfo("(완료)", stack, output, "스택에 남은 잔여 연산자를 모두 팝하여 출력에 추가합니다."));
+    }
+    
+    finalResult = evaluatePostfix(String.join(" ", output));
+    
   } catch (Exception e) {
     hasError = true;
     errorMessage = e.getMessage();
-    postfixExpr = "Conversion / Syntax Error";
+    steps.add(new StepInfo("오류", new Stack<>(), new ArrayList<>(), "오류 발생: " + errorMessage));
   }
 }
 
-// UI 박스 렌더링 헬퍼 함수
-void drawBox(float x, float y, float w, float h, String label, String val, color c) {
-  fill(40, 40, 55);
+void drawPanel(float x, float y, float w, float h, String title) {
+  fill(30, 30, 45);
+  stroke(60, 60, 80);
+  strokeWeight(2);
+  rect(x, y, w, h, 8);
+  
+  fill(180, 200, 220);
+  textSize(14);
+  textAlign(LEFT, CENTER);
+  text(title, x + 20, y + 22);
+  
+  stroke(60, 60, 80);
+  line(x, y + 40, x + w, y + 40);
+}
+
+void drawInfoBox(float x, float y, float w, float h, String label, String val, color c) {
+  fill(35, 35, 50);
   stroke(c);
   strokeWeight(2);
   rect(x, y, w, h, 8);
   
   noStroke();
   fill(c);
-  rect(x, y, 12, h, 8, 0, 0, 8); // 좌측 포인트 컬러 바
+  rect(x, y, 10, h, 8, 0, 0, 8);
   
   textAlign(LEFT, CENTER);
-  textSize(13);
-  fill(160);
-  text(label, x + 30, y + 22);
+  textSize(12);
+  fill(150);
+  text(label, x + 25, y + 16);
   
-  textSize(18);
+  textSize(16);
   fill(255);
-  text(val, x + 30, y + 50);
+  text(val, x + 25, y + 36);
 }
 
-// 수식을 토큰 단위(숫자와 연산자, 괄호)로 분리하는 토크나이저 (공백 유무 상관없이 동작)
 List<String> tokenize(String s) {
   List<String> tokens = new ArrayList<>();
   String numBuf = "";
   for (int i = 0; i < s.length(); i++) {
     char c = s.charAt(i);
     if (Character.isWhitespace(c)) continue;
-    
     if (Character.isDigit(c) || c == '.') {
       numBuf += c;
     } else {
@@ -124,13 +283,10 @@ List<String> tokenize(String s) {
       tokens.add(String.valueOf(c));
     }
   }
-  if (!numBuf.isEmpty()) {
-    tokens.add(numBuf);
-  }
+  if (!numBuf.isEmpty()) tokens.add(numBuf);
   return tokens;
 }
 
-// 연산자 우선순위 판별
 int precedence(char op) {
   if (op == '+' || op == '-') return 1;
   if (op == '*' || op == '/') return 2;
@@ -141,73 +297,16 @@ boolean isOperator(char c) {
   return c == '+' || c == '-' || c == '*' || c == '/';
 }
 
-// 1. 중위 표기법(Infix)을 후위 표기법(Postfix)으로 변환하는 함수 (Stack 활용)
-String infixToPostfix(String s) {
-  List<String> tokens = tokenize(s);
-  Stack<String> stack = new Stack<>();
-  List<String> output = new ArrayList<>();
-  
-  for (String token : tokens) {
-    char c = token.charAt(0);
-    
-    // 숫자인 경우 출력 리스트에 추가
-    if (Character.isDigit(c) || (token.length() > 1 && Character.isDigit(token.charAt(1)))) {
-      output.add(token);
-    } 
-    // 여는 괄호 '(' 인 경우 스택에 푸시
-    else if (c == '(') {
-      stack.push(token);
-    } 
-    // 닫는 괄호 ')' 인 경우 '('가 나올 때까지 팝하여 출력에 추가
-    else if (c == ')') {
-      while (!stack.isEmpty() && !stack.peek().equals("(")) {
-        output.add(stack.pop());
-      }
-      if (!stack.isEmpty() && stack.peek().equals("(")) {
-        stack.pop(); // '(' 제거
-      } else {
-        throw new IllegalArgumentException("Mismatched parentheses (괄호 짝이 맞지 않습니다)");
-      }
-    } 
-    // 연산자일 경우
-    else if (isOperator(c)) {
-      while (!stack.isEmpty() && precedence(stack.peek().charAt(0)) >= precedence(c)) {
-        output.add(stack.pop());
-      }
-      stack.push(token);
-    } else {
-      throw new IllegalArgumentException("Invalid token: " + token);
-    }
-  }
-  
-  // 스택에 남은 연산자들 모두 팝
-  while (!stack.isEmpty()) {
-    if (stack.peek().equals("(")) {
-      throw new IllegalArgumentException("Mismatched parentheses");
-    }
-    output.add(stack.pop());
-  }
-  
-  return String.join(" ", output);
-}
-
-// 2. 후위 표기법(Postfix) 수식을 스택으로 계산하는 함수
 float evaluatePostfix(String postfix) {
   if (postfix.isEmpty()) return 0;
   String[] tokens = postfix.split("\\s+");
   Stack<Float> stack = new Stack<>();
-  
   for (String token : tokens) {
     if (token.isEmpty()) continue;
     char c = token.charAt(0);
-    
-    // 숫자인 경우 스택에 푸시
     if (Character.isDigit(c) || (token.length() > 1 && Character.isDigit(token.charAt(1)))) {
       stack.push(Float.parseFloat(token));
-    } 
-    // 연산자인 경우 스택에서 두 개의 피연산자를 팝하여 계산
-    else if (isOperator(c)) {
-      if (stack.size() < 2) throw new IllegalArgumentException("Invalid expression format");
+    } else if (isOperator(c)) {
       float b = stack.pop();
       float a = stack.pop();
       float res = 0;
@@ -215,15 +314,10 @@ float evaluatePostfix(String postfix) {
         case '+': res = a + b; break;
         case '-': res = a - b; break;
         case '*': res = a * b; break;
-        case '/': 
-          if (b == 0) throw new ArithmeticException("Division by zero (0으로 나눌 수 없습니다)");
-          res = a / b; 
-          break;
+        case '/': res = a / b; break;
       }
       stack.push(res);
     }
   }
-  
-  if (stack.size() != 1) throw new IllegalArgumentException("Invalid expression evaluation");
   return stack.pop();
 }
