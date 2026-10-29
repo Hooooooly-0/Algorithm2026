@@ -39,3 +39,9 @@
 
 [BinarySearchTree](./homework/BinarySearchTree/BinarySearchTree.pde)
 ![Alt homework3](./homework/binarySearchTree1.gif)
+
+## Homework 4
+
+
+[infixToPostfixCalculatorUsingStack](./homwork/infixToPostfixCalculatorUsingStack.pde)
+![Alt homework4](./homwork/infixToPostfixCalculatorUsingStack.jpg)
