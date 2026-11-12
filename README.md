@@ -8,4 +8,4 @@
 ## Homework 5
 
 [Pebble](homework/pebble.pde)
-![Alt homework5](homework/pebble.jpg)
+![Alt homework5](homework/pebble.png)
