@@ -13,4 +13,4 @@
 ## Homework 6
 
 [BFS and DFS for a graph](homework/graphSearch.pde)
-![Alt homewrok6](homwork/graphSearch.pdg)
+![Alt homewrok6](homwork/graphSearch.png)
