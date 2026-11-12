@@ -9,3 +9,8 @@
 
 [Pebble](homework/pebble.pde)
 ![Alt homework5](homework/pebble.png)
+
+## Homework 6
+
+[BFS and DFS for a graph](homework/graphSearch.pde)
+![Alt homewrok6](homwork/graphSearch.pdg)
