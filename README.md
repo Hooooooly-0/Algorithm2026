@@ -15,3 +15,8 @@
 
 [BFS and DFS for a graph](homework/graphSearch.pde)
 ![Alt homewrok6](homework/graphSearch.png)
+
+## Homework 7
+
+[Kruskal's Algorithm](homework/kruskal'sAlgorithm.pde)
+![Alt homewrok7](homework/Kruskal'sAlgorithm.gif)
